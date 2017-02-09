@@ -1,3 +1,4 @@
+//! Morse to Ascii
 use TranslationError;
 
 /// Decodes a morse representation string into an ascii string
@@ -10,10 +11,13 @@ use TranslationError;
 /// ```
 /// # Errors
 ///
-/// Decoding will error when an unsupported morse character is being decoded.
-/// The error structure contains a `Vec<String> unsupported_characters` to show what characters failed.
-pub fn decode<S : Into<String>>(input:S) -> Result<String, TranslationError> {
-    let text = input.into().replace("*", ".").replace("-","_").trim().to_string();
+/// Decoding will error with a `morse::TranslationError`
+/// when an unsupported morse character is being decoded.
+/// The error structure contains a `Vec<String> unsupported_characters`
+/// to show what characters failed.
+/// Note: The input will still complete parsing.
+pub fn decode<S: Into<String>>(input: S) -> Result<String, TranslationError> {
+    let text = input.into().replace("*", ".").replace("-", "_").trim().to_string();
     let mut result = String::new();
     let mut error_values = vec![];
     let words = text.split("/");
@@ -76,7 +80,10 @@ pub fn decode<S : Into<String>>(input:S) -> Result<String, TranslationError> {
                 "..._.._" => '$',
                 ".__._." => '@',
                 "/" => ' ',
-                _ => { error_values.push(c.to_string()); '?' }
+                _ => {
+                    error_values.push(c.to_string());
+                    '#'
+                }
             };
             result.push(letter);
         }
@@ -86,7 +93,10 @@ pub fn decode<S : Into<String>>(input:S) -> Result<String, TranslationError> {
     if error_values.len() == 0 {
         Ok(result)
     } else {
-        Err(TranslationError {unsupported_characters: error_values, result: result})
+        Err(TranslationError {
+            unsupported_characters: error_values,
+            result: result,
+        })
     }
 }
 
@@ -172,15 +182,15 @@ fn result_err() {
         Ok(x) => {
             assert!(false);
             x
-        },
+        }
         Err(e) => {
             assert_eq!(e.unsupported_characters.len(), 1);
             assert_eq!(e.unsupported_characters[0], "_______");
-            assert_eq!("?sos", e.result);
+            assert_eq!("#sos", e.result);
             e.result
         }
     };
-    assert_eq!("?sos", morse);
+    assert_eq!("#sos", morse);
 }
 
 #[test]
@@ -189,7 +199,7 @@ fn result_ok() {
         Ok(x) => {
             assert_eq!("sos", x);
             x
-        },
+        }
         Err(e) => {
             assert!(false);
             e.result
