@@ -1,5 +1,17 @@
 use TranslationError;
 
+/// Encodes an ascii string into a morse code representation
+///
+/// # Examples
+/// ```
+/// use morse::encode;
+///
+/// assert_eq!(encode::encode("sos").unwrap(), "... ___ ...");
+/// ```
+/// # Errors
+///
+/// Encoding will error when an unsupported character is being encoded.
+/// The error structure contains a `Vec<String> unsupported_characters` to show what characters failed.
 pub fn encode<S : Into<String>>(input:S) -> Result<String, TranslationError> {
     let text = input.into().to_lowercase().trim().to_string();
     let chars = text.chars();

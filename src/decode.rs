@@ -1,5 +1,17 @@
 use TranslationError;
 
+/// Decodes a morse representation string into an ascii string
+///
+/// # Examples
+/// ```
+/// use morse::decode;
+///
+/// assert_eq!(decode::decode("... ___ ...").unwrap(), "sos");
+/// ```
+/// # Errors
+///
+/// Decoding will error when an unsupported morse character is being decoded.
+/// The error structure contains a `Vec<String> unsupported_characters` to show what characters failed.
 pub fn decode<S : Into<String>>(input:S) -> Result<String, TranslationError> {
     let text = input.into().replace("*", ".").replace("-","_").trim().to_string();
     let mut result = String::new();
