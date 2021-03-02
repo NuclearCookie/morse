@@ -1,6 +1,8 @@
 //! Ascii to Morse
 use TranslationError;
 
+use alloc::string::{String,ToString};
+
 /// Encodes an ascii string into a morse code representation
 ///
 /// # Examples
