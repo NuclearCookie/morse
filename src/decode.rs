@@ -53,6 +53,12 @@ pub fn decode<S: Into<String>>(input: S) -> Result<String, TranslationError> {
                 "_.._" => 'x',
                 "_.__" => 'y',
                 "__.." => 'z',
+                #[cfg(feature = "norwegian")]
+                "._._" => 'æ',
+                #[cfg(feature = "norwegian")]
+                "___." => 'ø',
+                #[cfg(feature = "norwegian")]
+                ".__._" => 'å',
                 "_____" => '0',
                 ".____" => '1',
                 "..___" => '2',
@@ -130,6 +136,12 @@ fn decode_lower_case_letters() {
     assert_eq!("x", decode("_.._").unwrap());
     assert_eq!("y", decode("_.__").unwrap());
     assert_eq!("z", decode("__..").unwrap());
+    #[cfg(feature = "norwegian")]
+    {
+        assert_eq!("æ", decode("._._").unwrap());
+        assert_eq!("ø", decode("___.").unwrap());
+        assert_eq!("å", decode(".__._").unwrap());
+    }
 }
 
 #[test]

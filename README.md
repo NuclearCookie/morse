@@ -18,3 +18,6 @@ git clone https://github.com/NuclearCookie/morse
 cd morse
 cargo install --path .
 ```
+
+## Features
+The "norwegian" feature adds support for the norwegian letters "Æ", "Ø" and "Å" in accordance with the norwegian morse alphabet, a strict superset of the english morse code.

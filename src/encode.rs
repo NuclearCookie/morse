@@ -51,6 +51,12 @@ pub fn encode<S: Into<String>>(input: S) -> Result<String, TranslationError> {
             'x' => "_.._",
             'y' => "_.__",
             'z' => "__..",
+            #[cfg(feature = "norwegian")]
+            'æ' => "._._",
+            #[cfg(feature = "norwegian")]
+            'ø' => "___.",
+            #[cfg(feature = "norwegian")]
+            'å' => ".__._",
             '0' => "_____",
             '1' => ".____",
             '2' => "..___",
@@ -128,6 +134,12 @@ fn encode_lower_case_letters() {
     assert_eq!("_.._", encode("x").unwrap());
     assert_eq!("_.__", encode("y").unwrap());
     assert_eq!("__..", encode("z").unwrap());
+    #[cfg(feature = "norwegian")]
+    {
+        assert_eq!("._._", encode("æ").unwrap());
+        assert_eq!("___.", encode("ø").unwrap());
+        assert_eq!(".__._", encode("å").unwrap());
+    }
 }
 
 #[test]
@@ -158,6 +170,12 @@ fn encode_upper_case_letters() {
     assert_eq!("_.._", encode("X").unwrap());
     assert_eq!("_.__", encode("Y").unwrap());
     assert_eq!("__..", encode("Z").unwrap());
+    #[cfg(feature = "norwegian")]
+    {
+        assert_eq!("._._", encode("Æ").unwrap());
+        assert_eq!("___.", encode("Ø").unwrap());
+        assert_eq!(".__._", encode("Å").unwrap());
+    }
 }
 
 #[test]

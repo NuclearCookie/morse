@@ -1,6 +1,9 @@
 [package]
 name = "morse"
-version = "0.1.1"
-authors = ["Pieter Vantorre <pietervantorre@gmail.com>", "Evan Pratten <ewpratten@gmail.com>"]
+version = "0.2.0"
+authors = ["Pieter Vantorre <pietervantorre@gmail.com>", "Evan Pratten <ewpratten@gmail.com>", "Torstein Nordgård-Hansen <torsteinnh@gmail.com>"]
 
 [dependencies]
+
+[features]
+norwegian = []
