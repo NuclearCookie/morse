@@ -1,5 +1,5 @@
 //! Ascii to Morse
-use TranslationError;
+use crate::TranslationError;
 
 use alloc::string::{String,ToString};
 

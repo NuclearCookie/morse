@@ -2,6 +2,7 @@
 name = "morse"
 version = "0.2.0"
 authors = ["Pieter Vantorre <pietervantorre@gmail.com>", "Evan Pratten <ewpratten@gmail.com>", "Torstein Nordgård-Hansen <torsteinnh@gmail.com>"]
+edition = "2021"
 
 [dependencies]
 
