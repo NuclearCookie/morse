@@ -39,6 +39,8 @@ pub fn encode<S: Into<String>>(input: S) -> Result<String, TranslationError> {
             'l' => "._..",
             'm' => "__",
             'n' => "_.",
+            #[cfg(feature = "spanish")]
+            'ñ' => "__.__",
             'o' => "___",
             'p' => ".__.",
             'q' => "__._",
@@ -140,6 +142,8 @@ fn encode_lower_case_letters() {
         assert_eq!("___.", encode("ø").unwrap());
         assert_eq!(".__._", encode("å").unwrap());
     }
+    #[cfg(feature = "spanish")]
+    assert_eq!("__.__", encode("ñ").unwrap());
 }
 
 #[test]
@@ -176,6 +180,8 @@ fn encode_upper_case_letters() {
         assert_eq!("___.", encode("Ø").unwrap());
         assert_eq!(".__._", encode("Å").unwrap());
     }
+    #[cfg(feature = "spanish")]
+    assert_eq!("__.__", encode("Ñ").unwrap());
 }
 
 #[test]

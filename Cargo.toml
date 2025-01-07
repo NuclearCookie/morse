@@ -1,10 +1,11 @@
 [package]
 name = "morse"
 version = "0.2.0"
-authors = ["Pieter Vantorre <pietervantorre@gmail.com>", "Evan Pratten <ewpratten@gmail.com>", "Torstein Nordgård-Hansen <torsteinnh@gmail.com>"]
+authors = ["Pieter Vantorre <pietervantorre@gmail.com>", "Evan Pratten <ewpratten@gmail.com>", "Jorge Brunal Pérez <diniremix@gmail.com>"]
 edition = "2021"
 
 [dependencies]
 
 [features]
 norwegian = []
+spanish = []

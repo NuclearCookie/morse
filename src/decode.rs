@@ -41,6 +41,8 @@ pub fn decode<S: Into<String>>(input: S) -> Result<String, TranslationError> {
                 "._.." => 'l',
                 "__" => 'm',
                 "_." => 'n',
+                #[cfg(feature = "spanish")]
+                "__.__" => 'ñ',
                 "___" => 'o',
                 ".__." => 'p',
                 "__._" => 'q',
@@ -142,6 +144,8 @@ fn decode_lower_case_letters() {
         assert_eq!("ø", decode("___.").unwrap());
         assert_eq!("å", decode(".__._").unwrap());
     }
+    #[cfg(feature = "spanish")]
+    assert_eq!("ñ", decode("__.__").unwrap());
 }
 
 #[test]
