@@ -28,14 +28,21 @@ pub fn decode<S: Into<String>>(input: S) -> Result<String, TranslationError> {
         for c in chars {
             let letter = match c {
                 "._" => 'a',
+                // same as norwegian
+                #[cfg(feature = "spanish")]
+                ".__._" => 'á',
                 "_..." => 'b',
                 "_._." => 'c',
                 "_.." => 'd',
                 "." => 'e',
+                #[cfg(feature = "spanish")]
+                ".._.." => 'é',
                 ".._." => 'f',
                 "__." => 'g',
                 "...." => 'h',
                 ".." => 'i',
+                // #[cfg(feature = "spanish")]
+                // ".." => 'í',
                 ".___" => 'j',
                 "_._" => 'k',
                 "._.." => 'l',
@@ -44,12 +51,17 @@ pub fn decode<S: Into<String>>(input: S) -> Result<String, TranslationError> {
                 #[cfg(feature = "spanish")]
                 "__.__" => 'ñ',
                 "___" => 'o',
+                // same as norwegian
+                #[cfg(feature = "spanish")]
+                "___." => 'ó',
                 ".__." => 'p',
                 "__._" => 'q',
                 "._." => 'r',
                 "..." => 's',
                 "_" => 't',
                 ".._" => 'u',
+                // #[cfg(feature = "spanish")]
+                // ".._" => 'ú',
                 "..._" => 'v',
                 ".__" => 'w',
                 "_.._" => 'x',
@@ -61,6 +73,8 @@ pub fn decode<S: Into<String>>(input: S) -> Result<String, TranslationError> {
                 "___." => 'ø',
                 #[cfg(feature = "norwegian")]
                 ".__._" => 'å',
+                #[cfg(feature = "spanish")]
+                "..__" => 'ü',
                 "_____" => '0',
                 ".____" => '1',
                 "..___" => '2',
@@ -73,8 +87,12 @@ pub fn decode<S: Into<String>>(input: S) -> Result<String, TranslationError> {
                 "____." => '9',
                 "._._._" => '.',
                 "__..__" => ',',
+                #[cfg(feature = "spanish")]
+                ".._._" => '¿',
                 "..__.." => '?',
                 ".____." => '\'',
+                #[cfg(feature = "spanish")]
+                "__..._" => '¡',
                 "_._.__" => '!',
                 "_.._." => '/',
                 "_.__." => '(',
@@ -145,7 +163,12 @@ fn decode_lower_case_letters() {
         assert_eq!("å", decode(".__._").unwrap());
     }
     #[cfg(feature = "spanish")]
-    assert_eq!("ñ", decode("__.__").unwrap());
+    {
+        assert_eq!("á", decode(".__._").unwrap());
+        assert_eq!("é", decode(".._..").unwrap());
+        assert_eq!("ñ", decode("__.__").unwrap());
+        assert_eq!("ü", decode("..__").unwrap());
+    }
 }
 
 #[test]
@@ -182,6 +205,11 @@ fn decode_other() {
     assert_eq!("\"", decode("._.._.").unwrap());
     assert_eq!("$", decode("..._.._").unwrap());
     assert_eq!("@", decode(".__._.").unwrap());
+    #[cfg(feature = "spanish")]
+    {
+        assert_eq!("¿", decode(".._._").unwrap());
+        assert_eq!("¡", decode("__..._").unwrap());
+    }
 }
 
 #[test]

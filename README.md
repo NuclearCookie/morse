@@ -20,4 +20,5 @@ cargo install --path .
 ```
 
 ## Features
-The "norwegian" feature adds support for the norwegian letters "Æ", "Ø" and "Å" in accordance with the norwegian morse alphabet, a strict superset of the english morse code.
+- The "norwegian" feature adds support for the norwegian letters "Æ", "Ø" and "Å" in accordance with the norwegian morse alphabet, a strict superset of the english morse code.
+- The "spanish" feature adds support for the letters "ñ", "ü", some vowels, and accents
