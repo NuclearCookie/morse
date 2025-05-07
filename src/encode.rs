@@ -1,5 +1,5 @@
 //! Ascii to Morse
-use TranslationError;
+use crate::TranslationError;
 
 use alloc::string::{String,ToString};
 
@@ -26,31 +26,53 @@ pub fn encode<S: Into<String>>(input: S) -> Result<String, TranslationError> {
     for c in chars {
         let code = match c {
             'a' => "._",
+            // same as norwegian
+            #[cfg(feature = "spanish")]
+            'á' => ".__._",
             'b' => "_...",
             'c' => "_._.",
             'd' => "_..",
             'e' => ".",
+            #[cfg(feature = "spanish")]
+            'é' => ".._..",
             'f' => ".._.",
             'g' => "__.",
             'h' => "....",
             'i' => "..",
+            // #[cfg(feature = "spanish")]
+            // 'í' => "..",
             'j' => ".___",
             'k' => "_._",
             'l' => "._..",
             'm' => "__",
             'n' => "_.",
+            #[cfg(feature = "spanish")]
+            'ñ' => "__.__",
             'o' => "___",
+            // same as norwegian
+            #[cfg(feature = "spanish")]
+            'ó' => "___.",
             'p' => ".__.",
             'q' => "__._",
             'r' => "._.",
             's' => "...",
             't' => "_",
             'u' => ".._",
+            // #[cfg(feature = "spanish")]
+            // 'ú' => ".._",
             'v' => "..._",
             'w' => ".__",
             'x' => "_.._",
             'y' => "_.__",
             'z' => "__..",
+            #[cfg(feature = "norwegian")]
+            'æ' => "._._",
+            #[cfg(feature = "norwegian")]
+            'ø' => "___.",
+            #[cfg(feature = "norwegian")]
+            'å' => ".__._",
+            #[cfg(feature = "spanish")]
+            'ü' => "..__",
             '0' => "_____",
             '1' => ".____",
             '2' => "..___",
@@ -63,8 +85,12 @@ pub fn encode<S: Into<String>>(input: S) -> Result<String, TranslationError> {
             '9' => "____.",
             '.' => "._._._",
             ',' => "__..__",
+            #[cfg(feature = "spanish")]
+            '¿' => ".._._",
             '?' => "..__..",
             '\'' => ".____.",
+            #[cfg(feature = "spanish")]
+            '¡' => "__..._",
             '!' => "_._.__",
             '/' => "_.._.",
             '(' => "_.__.",
@@ -128,6 +154,19 @@ fn encode_lower_case_letters() {
     assert_eq!("_.._", encode("x").unwrap());
     assert_eq!("_.__", encode("y").unwrap());
     assert_eq!("__..", encode("z").unwrap());
+    #[cfg(feature = "norwegian")]
+    {
+        assert_eq!("._._", encode("æ").unwrap());
+        assert_eq!("___.", encode("ø").unwrap());
+        assert_eq!(".__._", encode("å").unwrap());
+    }
+    #[cfg(feature = "spanish")]
+    {
+        assert_eq!(".__._", encode("á").unwrap());
+        assert_eq!(".._..", encode("é").unwrap());
+        assert_eq!("__.__", encode("ñ").unwrap());
+        assert_eq!("..__", encode("ü").unwrap());
+    }
 }
 
 #[test]
@@ -158,6 +197,14 @@ fn encode_upper_case_letters() {
     assert_eq!("_.._", encode("X").unwrap());
     assert_eq!("_.__", encode("Y").unwrap());
     assert_eq!("__..", encode("Z").unwrap());
+    #[cfg(feature = "norwegian")]
+    {
+        assert_eq!("._._", encode("Æ").unwrap());
+        assert_eq!("___.", encode("Ø").unwrap());
+        assert_eq!(".__._", encode("Å").unwrap());
+    }
+    #[cfg(feature = "spanish")]
+    assert_eq!("__.__", encode("Ñ").unwrap());
 }
 
 #[test]
@@ -194,6 +241,11 @@ fn encode_other() {
     assert_eq!("._.._.", encode("\"").unwrap());
     assert_eq!("..._.._", encode("$").unwrap());
     assert_eq!(".__._.", encode("@").unwrap());
+    #[cfg(feature = "spanish")]
+    {
+        assert_eq!(".._._", encode("¿").unwrap());
+        assert_eq!("__..._", encode("¡").unwrap());
+    }
 }
 
 #[test]
